@@ -22,9 +22,9 @@ services:
 {% if domain_name_enable and domain_name and domain_pihole %}
       - "38080:80/tcp"
 {% else %}
-      - "80:80/tcp"
+      - "{{ pihole_port_http }}:80/tcp"
 {% endif %}
-      - "443:443/tcp"
+      - "{{ pihole_port_https }}:443/tcp"
     environment:
       TZ: '{{ pihole_timezone }}'
       WEBPASSWORD: '{{ pihole_password }}'
