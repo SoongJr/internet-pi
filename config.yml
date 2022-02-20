@@ -6,13 +6,11 @@ config_dir: '~/internet-pi'
 pihole_enable: true
 pihole_hostname: pihole
 pihole_timezone: Europe/Berlin
-pihole_password: "***"
 pihole_port_http: 8080
 pihole_port_https: 44443
 
 # Internet monitoring configuration.
 monitoring_enable: true
-monitoring_grafana_admin_password: "***"
 monitoring_speedtest_interval: 60m
 monitoring_ping_interval: 5s
 monitoring_ping_hosts:  # [URL];[HUMAN_READABLE_NAME]
