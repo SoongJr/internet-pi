@@ -1,0 +1,30 @@
+---
+# Location where configuration files will be stored.
+config_dir: '~/internet-pi'
+
+# Pi-hole configuration.
+pihole_enable: true
+pihole_hostname: pihole
+pihole_timezone: Europe/Berlin
+pihole_password: "***"
+pihole_port_http: 8080
+pihole_port_https: 44443
+
+# Internet monitoring configuration.
+monitoring_enable: true
+monitoring_grafana_admin_password: "***"
+monitoring_speedtest_interval: 60m
+monitoring_ping_interval: 5s
+monitoring_ping_hosts:  # [URL];[HUMAN_READABLE_NAME]
+  - http://www.google.com/;google.com
+  - https://github.com/;github.com
+  - https://www.soongjr.mooo.com/;soongjr.mooo.com
+
+# Shelly Plug configuration. (Also requires `monitoring_enable`)
+shelly_plug_enable: false
+
+# AirGradient configuration. (Also requires `monitoring_enable`)
+airgradient_enable: false
+
+# Starlink configuration. (Also requires `monitoring_enable`)
+starlink_enable: false
