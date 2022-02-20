@@ -16,7 +16,7 @@ monitoring_ping_interval: 5s
 monitoring_ping_hosts:  # [URL];[HUMAN_READABLE_NAME]
   - http://www.google.com/;google.com
   - https://github.com/;github.com
-  - https://www.soongjr.mooo.com/;soongjr.mooo.com
+  - https://soongjr.mooo.com/;soongjr.mooo.com
 
 # Shelly Plug configuration. (Also requires `monitoring_enable`)
 shelly_plug_enable: false
