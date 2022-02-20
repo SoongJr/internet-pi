@@ -59,11 +59,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-green",
                 "value": null
               },
               {
-                "color": "red",
+                "color": "dark-red",
                 "value": 80
               }
             ]

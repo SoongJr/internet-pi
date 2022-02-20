@@ -42,15 +42,15 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-green",
                 "value": null
               },
               {
-                "color": "#EAB839",
+                "color": "dark-yellow",
                 "value": 150
               },
               {
-                "color": "red",
+                "color": "dark-red",
                 "value": 300
               }
             ]
@@ -114,15 +114,15 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-green",
                 "value": null
               },
               {
-                "color": "#EAB839",
+                "color": "dark-yellow",
                 "value": 150
               },
               {
-                "color": "red",
+                "color": "dark-red",
                 "value": 300
               }
             ]
@@ -214,7 +214,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-green",
                 "value": null
               },
               {
@@ -277,6 +277,7 @@
   "schemaVersion": 35,
   "style": "dark",
   "tags": [
+    "provisioned",
     "power"
   ],
   "templating": {
