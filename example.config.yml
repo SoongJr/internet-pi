@@ -1,6 +1,8 @@
 ---
 # Location where configuration files will be stored.
 config_dir: '~'
+# DOCKER_HOST variable of the target
+docker_host: 'unix://var/run/docker.sock'
 
 # Pi-hole configuration.
 pihole_enable: true

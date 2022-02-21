@@ -4,6 +4,7 @@
     project_src: "{{ config_dir }}/pi-hole/"
     build: false
     restarted: true
+    docker_host: "{{ docker_host }}"
   become: false
 
 - name: Restart internet-monitoring
@@ -11,6 +12,7 @@
     project_src: "{{ config_dir }}/internet-monitoring/"
     build: false
     restarted: true
+    docker_host: "{{ docker_host }}"
   become: false
 
 - name: Restart shelly-plug-prometheus
@@ -18,6 +20,7 @@
     project_src: "{{ config_dir }}/shelly-plug-prometheus/"
     build: false
     restarted: true
+    docker_host: "{{ docker_host }}"
   become: false
 
 - name: Restart starlink-exporter
@@ -25,4 +28,5 @@
     project_src: "{{ config_dir }}/starlink-exporter/"
     build: false
     restarted: true
+    docker_host: "{{ docker_host }}"
   become: false
