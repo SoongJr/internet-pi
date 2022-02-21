@@ -20,10 +20,14 @@
   when: docker_command_result.rc == 1
 
 - name: Ensure Docker is started.
-  ansible.builtin.service:
-    name: docker
-    state: started
-    enabled: true
+  # in WSL, docker does not run as service
+  # ansible.builtin.service:
+    # name: docker
+    # state: started
+    # enabled: true
+  ansible.builtin.command: /usr/bin/docker PS
+  failed_when: false
+  changed_when: false
 
 - name: Ensure dependencies are installed (Debian).
   ansible.builtin.apt:
