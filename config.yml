@@ -1,9 +1,11 @@
 ---
 # Location where configuration files will be stored.
 config_dir: '~/internet-pi'
+# DOCKER_HOST variable of the target
+docker_host: 'unix:///home/soongjr/shared-docker/docker.sock'
 
 # Pi-hole configuration.
-pihole_enable: true
+pihole_enable: false
 pihole_hostname: pihole
 pihole_timezone: Europe/Berlin
 pihole_port_http: 8080
@@ -11,7 +13,7 @@ pihole_port_https: 44443
 
 # Internet monitoring configuration.
 monitoring_enable: true
-monitoring_speedtest_interval: 60m
+monitoring_speedtest_interval: 2m
 monitoring_ping_interval: 5s
 monitoring_ping_hosts:  # [URL];[HUMAN_READABLE_NAME]
   - http://www.google.com/;google.com
