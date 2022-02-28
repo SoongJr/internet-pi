@@ -17,6 +17,11 @@ pihole_timezone: Europe/Berlin
 pihole_port_http: 8080
 pihole_port_https: 44443
 
+# Raspberry monitoring configuration
+raspberry_monitoring_enable: true
+telegraf_retention_policy: '90d'
+telegraf_password: 'admin'
+
 # Internet monitoring configuration.
 monitoring_enable: true
 monitoring_speedtest_interval: 60m
