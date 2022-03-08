@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# this script takes as input a minimum temperature in °C (floating point supported) to reach
+# and tries to achieve this target by putting stress on the CPU and thus heating the enclosure of the machine it runs on.
+# please note that this script should be run with sudo as the `stress` tools should run as root.
+set -euo pipefail
+
+target_temp=$1
+sensor_id='{{ item.id }}' # one-wire slave ID of the probe that provides the temperature (replaced by templating mechanism of ansible)
+cpu_temp_max=65           # reduce power output if cpu gets too hot
+cpu_temp_max_critical=70  # disable power output completely and let cpu cool down if this is exceeded
+cpu_cores=$(grep -c ^processor /proc/cpuinfo)
+
+# basic sanity test of inputs
+[[ -f "/sys/bus/w1/devices/${sensor_id}/w1_slave" ]] || {
+    printf "Error: one-wire ID %s is invalid, sensor not found.\n" "${sensor_id}" >&2
+    exit 1
+}
+
+while true; do
+    # get current temperature reading and convert to floating point (it is given as milli-°C):
+    current_temp=$(grep -Po "(?<=t=)[+-]?[0-9]+" "/sys/bus/w1/devices/${sensor_id}/w1_slave" | sed -E "s/([+-]?[0-9]+)([0-9][0-9][0-9])/\1.\2/g")
+    # check if temp already exceeds target:
+    if awk "BEGIN {exit !(${current_temp} >= ${target_temp})}"; then
+        printf "%s°C is over threshold.\n" "${current_temp}"
+        sleep 1m
+        continue
+    fi
+    printf "%s°C is below threshold, heating...\n" "${current_temp}"
+    # get current CPU temperature. We want it to warm up, but we don't want to fry the machine, so we check for thresholds.
+    cpu_temp=$(vcgencmd measure_temp | grep -Po "(?<=temp=)\d+\.\d+")
+    if awk "BEGIN {exit !(${cpu_temp} < ${cpu_temp_max})}"; then
+        # temp is fine, give it beans!
+        #VERBOSE: printf "cpu temp: %s°C < %s°C\n" "${cpu_temp}" "${cpu_temp_max}"
+        stress --cpu "${cpu_cores}" --timeout 30 >/dev/null
+    elif awk "BEGIN {exit !(${cpu_temp} < ${cpu_temp_max_critical})}" && [[ ${cpu_cores} -gt 1 ]]; then
+        # we are over the max cpu temp, reduce the stress level a bit
+        #VERBOSE: printf "cpu temp: %s°C <= %s°C < %s°C\n" "${cpu_temp_max}" "${cpu_temp}" "${cpu_temp_max_critical}"
+        stress --cpu $((cpu_cores - 1)) --timeout 60 >/dev/null
+    else
+        # we have reached critical cpu temp, let it cool down for a while
+        printf "warning, cpu temp of %s°C exceeds critical limits, pausing heating.\n" "${cpu_temp}"
+        sleep 2m
+    fi
+done

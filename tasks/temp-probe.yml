@@ -46,3 +46,11 @@
     dest: "{{ config_dir }}/internet-monitoring/grafana/provisioning/dashboards/"
     mode: 0644
   become: false
+
+- name: Copy script to try and achieve target temperature to config folder.
+  ansible.builtin.template:
+    src: templates/heat-enclosure.sh.j2
+    dest: "{{ config_dir }}/temp-probe-exporter//heat-enclosure-{{ item.name | lower }}.sh"
+    mode: 0755
+  become: false
+  loop: "{{ temp_probes }}"
