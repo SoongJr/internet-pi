@@ -34,6 +34,13 @@
   become: false
   notify: Restart temp-probe-exporter
 
+- name: Ensure Temperature Probes are accessible where expected.
+  file:
+    path: "/sys/devices/{{ item.master }}/{{ item.id }}/w1_slave"
+    state: file
+  become: false
+  loop: "{{ temp_probes }}"
+
 - name: Ensure Temperature Probe Prometheus exporter is running.
   community.docker.docker_compose:
     project_src: "{{ config_dir }}/temp-probe-exporter/"
