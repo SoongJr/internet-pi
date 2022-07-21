@@ -38,6 +38,7 @@
   community.docker.docker_compose:
     project_src: "{{ config_dir }}/temp-probe-exporter/"
     build: false
+    remove_orphans: true
   become: false
 
 - name: Copy Temperature Probe dashboard config to grafana.

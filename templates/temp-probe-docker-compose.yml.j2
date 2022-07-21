@@ -11,6 +11,9 @@ services:
       - "{{ probe.port }}:{{ probe.port }}"
     command: --port {{ probe.port }} --device-id {{ probe.id }} --room "{{ probe.name }}"
     volumes:
-      - "/sys/devices/w1_bus_master1/:/sys/devices/w1_bus_master1/:ro"
+      - "/sys/devices/{{ probe.master }}/:/sys/devices/w1_bus_master1/:ro"
+      # note: the git repo that parses the temp data from one-wire sensor has hardcoded the path /sys/devices/w1_bus_master1,
+      # even though multiple sensors may appear under different bus masters.
+      # So we have to map the actual master to the expected one.
     restart: unless-stopped
 {% endfor %}

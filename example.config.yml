@@ -62,7 +62,8 @@ starlink_enable: false
 temp_probes_enable: false
 temp_probes:
   - name: "temp"           # human-readable name you wish to give this probe
-    id: "28-06201cd5251b"  # ID of the probe (check which folder in /sys/bus/w1/devices has a file named w1_slave)
+    id: "28-06201cd5251b"  # ID of the probe (check which folder in /sys/devices has a file named w1_slave)
+    master: "w1_bus_master1" # master device this probe is assigned to
     # GPIO pin the data signal of the probe is connected to (will be set up for one-wire communication):
     # Changing or enabling this setting will require a reboot of the pi.
     pin: 4
