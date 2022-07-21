@@ -57,3 +57,10 @@ temp_probes:
     # Changing or enabling this setting will require a reboot of the pi.
     pin: 4
     port: 9920             # port for prometheus to reach the exporter
+  - name: "Outside"        # human-readable name you wish to give this probe
+    id: "28-1f68841e64ff"  # ID of the probe (check which folder in /sys/devices has a file named w1_slave)
+    master: "w1_bus_master2" # master device this probe is assigned to
+    # GPIO pin the data signal of the probe is connected to (will be set up for one-wire communication):
+    # Changing or enabling this setting will require a reboot of the pi.
+    pin: 17
+    port: 9921             # port for prometheus to reach the exporter
