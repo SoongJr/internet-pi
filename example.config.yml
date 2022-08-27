@@ -68,3 +68,8 @@ temp_probes:
     # Changing or enabling this setting will require a reboot of the pi.
     pin: 4
     port: 9920             # port for prometheus to reach the exporter
+# probes exposed elsewhere in the network
+temp_probes_ext:
+  - name: "shed"           # human-readable name you wish to give this probe in grafana
+    hostname: "pi-pico"    # where to reach the client
+    port: 80               # port for prometheus to reach the client
