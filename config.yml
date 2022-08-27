@@ -49,6 +49,7 @@ starlink_enable: false
 
 # Temperature Probe configuration. (Also requires `monitoring_enable`)
 temp_probes_enable: true
+# probes directly connected to the host
 temp_probes:
   - name: "Inside"         # human-readable name you wish to give this probe
     id: "28-06201cd5251b"  # ID of the probe (check which folder in /sys/devices has a file named w1_slave)
@@ -64,3 +65,8 @@ temp_probes:
     # Changing or enabling this setting will require a reboot of the pi.
     pin: 17
     port: 9921             # port for prometheus to reach the exporter
+# probes exposed elsewhere in the network
+temp_probes_ext:
+  - name: "pi-pico"        # human-readable name you wish to give this probe in grafana
+    hostname: "pi-pico"    # where to reach the client
+    port: 80               # port for prometheus to reach the client
