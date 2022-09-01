@@ -130,10 +130,12 @@
             "type": "prometheus",
             "uid": "P1809F7CD0C75ACF3"
           },
+          "editorMode": "code",
           "exemplar": false,
           "expr": "temperature_celsius{}",
           "interval": "",
-          "legendFormat": "{{job}}",
+          "legendFormat": "{{room}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -250,13 +252,13 @@
     "list": []
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Temperature Probe",
   "uid": "fS8GqLL7z",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

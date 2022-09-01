@@ -58,7 +58,7 @@ scrape_configs:
 {% endfor %}
 
 {% for probe in temp_probes_ext %}
-  - job_name: {{ probe.name }}
+  - job_name: '{{ probe.hostname }}:{{ probe.port }}'
     metrics_path: /metrics
     static_configs:
       - targets: ['{{ probe.hostname }}:{{ probe.port }}']

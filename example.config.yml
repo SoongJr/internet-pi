@@ -70,6 +70,5 @@ temp_probes:
     port: 9920             # port for prometheus to reach the exporter
 # probes exposed elsewhere in the network
 temp_probes_ext:
-  - name: "shed"           # human-readable name you wish to give this probe in grafana
-    hostname: "pi-pico"    # where to reach the client
+  - hostname: "pi-pico"    # where to reach the client (the client defines what the humand-readable name shall be)
     port: 80               # port for prometheus to reach the client
