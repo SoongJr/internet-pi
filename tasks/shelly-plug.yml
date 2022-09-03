@@ -20,6 +20,7 @@
   community.docker.docker_compose:
     project_src: "{{ config_dir }}/shelly-plug-prometheus/"
     build: false
+    remove_orphans: yes
   become: false
 
 - name: Copy shelly dashboard config to grafana
