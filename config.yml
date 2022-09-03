@@ -40,6 +40,12 @@ shelly_plugs:           # list of Shelly Plugs to connect to
   - name: Printer
     hostname: "shellyplug-printer"
     port: 9925
+  - name: generic-0
+    hostname: "shellyplug-generic-0"
+    port: 9926
+  - name: Bedroom-Tech
+    hostname: "shellyplug-generic-1"
+    port: 9927
 
 # AirGradient configuration. (Also requires `monitoring_enable`)
 airgradient_enable: false
