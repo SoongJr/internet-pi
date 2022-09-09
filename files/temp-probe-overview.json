@@ -232,7 +232,7 @@
           "exemplar": false,
           "expr": "humidity_percent{}",
           "interval": "",
-          "legendFormat": "{{job}}",
+          "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
         }
@@ -259,6 +259,6 @@
   "timezone": "",
   "title": "Temperature Probe",
   "uid": "fS8GqLL7z",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
