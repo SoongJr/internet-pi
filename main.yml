@@ -58,4 +58,4 @@
 
     - name: Set up Temperature Probe Monitoring.
       ansible.builtin.import_tasks: tasks/temp-probe.yml
-      when: temp_probes_enable
+      when: temp_probes_enable.internal or temp_probes_enable.external

@@ -49,14 +49,16 @@ scrape_configs:
       - targets: ['172.17.0.1:9817']
 {% endif %}
 
-{% if temp_probes_enable %}
+{% if temp_probes_enable.internal %}
 {% for probe in temp_probes %}
   - job_name: {{ probe.name }}
     metrics_path: /metrics
     static_configs:
       - targets: ['172.17.0.1:{{ probe.port }}']
 {% endfor %}
+{% endif %}
 
+{% if temp_probes_enable.external %}
 {% for probe in temp_probes_ext %}
   - job_name: '{{ probe.hostname }}:{{ probe.port }}'
     metrics_path: /metrics

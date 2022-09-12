@@ -59,7 +59,9 @@ airgradient_sensors:
 starlink_enable: false
 
 # Temperature Probe configuration. (Also requires `monitoring_enable`)
-temp_probes_enable: false
+temp_probes_enable: 
+  internal: false
+  external: true
 temp_probes:
   - name: "temp"           # human-readable name you wish to give this probe
     id: "28-06201cd5251b"  # ID of the probe (check which folder in /sys/devices has a file named w1_slave)
