@@ -55,15 +55,15 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
+                                "color": "dark-green",
                                 "value": null
                             },
                             {
-                                "color": "orange",
+                                "color": "dark-yellow",
                                 "value": 70
                             },
                             {
-                                "color": "red",
+                                "color": "dark-red",
                                 "value": 80
                             }
                         ]
@@ -168,7 +168,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
+                                "color": "dark-green",
                                 "value": null
                             }
                         ]
@@ -283,7 +283,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
+                                "color": "dark-green",
                                 "value": null
                             },
                             {
@@ -398,15 +398,15 @@
                                 "value": 1.8
                             },
                             {
-                                "color": "green",
+                                "color": "dark-green",
                                 "value": 2.3
                             },
                             {
-                                "color": "#EAB839",
+                                "color": "dark-yellow",
                                 "value": 5
                             },
                             {
-                                "color": "red",
+                                "color": "dark-red",
                                 "value": 5.5
                             }
                         ]
