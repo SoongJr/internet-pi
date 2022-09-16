@@ -55,7 +55,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 4,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -170,7 +170,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 4,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -199,7 +199,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
+        "h": 17,
         "w": 24,
         "x": 0,
         "y": 21
@@ -259,6 +259,6 @@
   "timezone": "",
   "title": "Temperature Probe",
   "uid": "fS8GqLL7z",
-  "version": 3,
+  "version": 4,
   "weekStart": ""
 }
