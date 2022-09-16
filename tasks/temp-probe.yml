@@ -54,11 +54,14 @@
   become: false
   when: temp_probes_enable.internal
 
-- name: Copy Temperature Probe dashboard config to grafana.
+- name: Copy Temperature dashboard configs to grafana.
   ansible.builtin.copy:
-    src: files/temp-probe-overview.json
+    src: "{{ item }}"
     dest: "{{ config_dir }}/internet-monitoring/grafana/provisioning/dashboards/"
     mode: 0644
+  loop:
+    - files/temp-probe-overview.json
+    - files/temp-probe-categorized.json
   become: false
 
 - name: Copy script to try and achieve target temperature to config folder.
