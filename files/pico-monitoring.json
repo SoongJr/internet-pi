@@ -263,7 +263,7 @@
                         },
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
-                        "pointSize": 4,
+                        "pointSize": 2,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -370,7 +370,7 @@
                         },
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
-                        "pointSize": 4,
+                        "pointSize": 2,
                         "scaleDistribution": {
                             "type": "linear"
                         },
@@ -455,7 +455,7 @@
             "type": "timeseries"
         }
     ],
-    "refresh": "30s",
+    "refresh": "5s",
     "schemaVersion": 37,
     "style": "dark",
     "tags": [],
@@ -470,6 +470,6 @@
     "timezone": "",
     "title": "Raspberry Pi Pico Monitoring",
     "uid": "ahypvRM4k",
-    "version": 5,
+    "version": 6,
     "weekStart": ""
 }
