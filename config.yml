@@ -37,15 +37,19 @@ shelly_plugs:           # list of Shelly Plugs to connect to
   - name: Fridge
     hostname: "shellyplug-fridge"
     port: 9924
+    scrape_interval: 1m
   - name: Printer
     hostname: "shellyplug-printer"
     port: 9925
+    scrape_interval: 30s
   - name: generic-0
     hostname: "shellyplug-generic-0"
     port: 9926
+    scrape_interval: 1s
   - name: Bedroom-Tech
     hostname: "shellyplug-generic-1"
     port: 9927
+    scrape_interval: 1m
 
 # AirGradient configuration. (Also requires `monitoring_enable`)
 airgradient_enable: false
