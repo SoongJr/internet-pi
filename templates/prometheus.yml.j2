@@ -26,7 +26,7 @@ scrape_configs:
 {% for plug in shelly_plugs %}
   - job_name: '{{ plug.name }}'
     metrics_path: /metrics
-    scrape_interval: 1m
+    scrape_interval: {{ plug.scrape_interval }}
     static_configs:
       - targets: ['172.17.0.1:{{ plug.port }}']
 {% endfor %}

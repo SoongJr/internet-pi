@@ -44,6 +44,7 @@ shelly_plugs:           # list of Shelly Plugs to connect to
   - name: my-shelly-plug   # will show up in dashboard to identify this plug
     hostname: "my-shelly-plug-host-or-ip"
     port: 9924
+    scrape_interval: 1m
 shelly_plugs_http_username: username
 shelly_plugs_http_password: "password"
 
