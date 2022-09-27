@@ -1,0 +1,19 @@
+version: "3"
+services:
+  heat-enclosure:
+    build:
+      context: {{ config_dir }}/heat-enclosure
+      dockerfile: heat-enclosure.dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/usr/src/app
+      - /etc/localtime:/etc/localtime:ro # this synchronizes the hosts's timezone to the container
+    network_mode: "host"
+    environment:
+      TODO: "remove hardcoded values. define TUNINGS together with sensor and plug (system-specific). make definitions in config.yml?"
+      TEMPERATURE_GET: "http://pico-temp-2/dht?room=ants"
+      HEATER_POST: "http://{{ shelly_plugs_http_username }}:{{ shelly_plugs_http_password }}@shellyplug-generic-0/relay/0?turn=on&timer={timer}"
+      START_TEMP: 20
+      TARGET_TEMP: 13
+      START_DATE: "2022-09-27"
+      TARGET_DATE: "2022-10-04"

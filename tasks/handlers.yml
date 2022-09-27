@@ -43,3 +43,10 @@
     build: false
     restarted: true
   become: false
+
+- name: Restart heat-enclosure-runner
+  community.docker.docker_compose:
+    project_src: "{{ config_dir }}/heat-enclosure/"
+    restarted: true
+    build: false
+  become: false

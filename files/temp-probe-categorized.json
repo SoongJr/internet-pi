@@ -92,6 +92,14 @@
               },
               {
                 "color": "dark-yellow",
+                "value": 3
+              },
+              {
+                "color": "dark-green",
+                "value": 5
+              },
+              {
+                "color": "dark-yellow",
                 "value": 20
               },
               {
@@ -862,6 +870,6 @@
   "timezone": "",
   "title": "Temperature categorized",
   "uid": "nZDkJnnVz",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
