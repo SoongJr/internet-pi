@@ -384,6 +384,7 @@
                     },
                     "decimals": 1,
                     "mappings": [],
+                    "noValue": "0",
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -468,6 +469,6 @@
     "timezone": "",
     "title": "Raspberry Pi Pico Monitoring",
     "uid": "ahypvRM4k",
-    "version": 8,
+    "version": 9,
     "weekStart": ""
 }
