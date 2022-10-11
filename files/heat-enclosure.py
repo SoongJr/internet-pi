@@ -11,6 +11,7 @@ from math import ceil
 # inputs
 if (temp_get := os.environ.get('TEMPERATURE_GET')) is None:
     raise TypeError("Variable is mandatory: TEMPERATURE_GET")
+temp_reboot = os.environ.get('TEMPERATURE_REBOOT')
 if (heater_post := os.environ.get('HEATER_POST')) is None:
     raise TypeError("Variable is mandatory: HEATER_POST")
 if (start_temp := os.environ.get('START_TEMP')) is None:
@@ -51,11 +52,11 @@ def get_setpoint():
 # create PID object
 pid = PID()
 pid.sample_time = 60  # seconds
-pid.Kp = 1  # full blast if we're one degree from our target
+pid.Kp = 1  # full blast if we are this many degrees from our target
 pid.Ki = 0.001
 # big Kd as it only has effect for a single heating cycle. So if temp changes by .1°C we steer in the other direction for a bit, even if it's the wrong direction.
 # It might make sense to use something different here if we had higher precision temp sensors and/or raised the sample_time significantly, but the latter also reduces reaction time.
-pid.Kd = 300  # 300 -> 50% PWM
+pid.Kd = 150  # 600 equals 100% PWM
 # ensure we don't get any nonsensical values
 pid.output_limits = (-0.9, 0.9)
 
@@ -72,7 +73,21 @@ while True:
 
     # measure actual temperature
     last_measurement = now
-    response = requests.get(temp_get)
+    while True:
+        try:
+            response = requests.get(temp_get)
+        except requests.exceptions.ConnectionError as errc:
+            print("Error reading temperature: ", errc)
+            if not temp_reboot is None:
+                print("Will reboot temp sensor and try again.")
+                # posting to this URL should reboot the device. This can easily be done with a shellyplug.
+                requests.post(temp_reboot)
+                # give device some time to reboot before attempting another connection
+                time.sleep(30)
+            else:
+                raise
+        else:
+            break
     if response.status_code != 200:
         raise RuntimeError("call to {} responded with status {}".format(
             temp_get, response.status_code))
