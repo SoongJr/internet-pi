@@ -31,6 +31,13 @@ monitoring_ping_hosts:  # [URL];[HUMAN_READABLE_NAME]
   - https://github.com/;github.com
   - https://soongjr.mooo.com/;soongjr.mooo.com
 
+# Configure mail account to allow grafana sending notifications/alerts
+monitoring_grafana_email_enable: true
+monitoring_grafana_email_host: smtp.gmail.com:587
+monitoring_grafana_email_fromaddress: ""
+monitoring_grafana_email_fromname: "Grafana"
+monitoring_grafana_email_recipients: "SoongJr@googlemail.com" # semicolon-separated list
+
 # Shelly Plug configuration. (Also requires `monitoring_enable`)
 shelly_plugs_enable: true
 shelly_plugs:           # list of Shelly Plugs to connect to
