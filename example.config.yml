@@ -2,6 +2,13 @@
 # Location where configuration files will be stored.
 config_dir: '~'
 
+# By default, docker containers get set up once and not updated automatically by new ansible runs.
+# To pull new images and update the containers, set this to "true".
+# This makes ansible run 90 seconds slower even if there are no updates at all.
+# You also might not want to randomly update containers while rolling out a change to your config and instead deliberately update containers without any other change.
+# So this should normally be set to false and only changed for a single run when you're ready to update.
+docker_update_containers: false
+
 # IPv6 configuration: You can specify your desired subnet for docker-compose here.
 # If you change these settings, you must tear down any existing containers first so the network is created from scratch
 docker_ipv6_enable: false

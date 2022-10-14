@@ -50,6 +50,7 @@
   community.docker.docker_compose:
     project_src: "{{ config_dir }}/temp-probe-exporter/"
     build: false
+    pull: "{{ docker_update_containers }}"
     remove_orphans: true
   become: false
   when: temp_probes_enable.internal
@@ -97,5 +98,6 @@
     project_src: "{{ config_dir }}/heat-enclosure/"
     remove_orphans: true
     build: false
+    pull: "{{ docker_update_containers }}"
   become: false
 # TODO: move the heat-enclosure stuff into its own task?

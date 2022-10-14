@@ -18,6 +18,7 @@
   community.docker.docker_compose:
     project_src: "{{ config_dir }}/starlink-exporter/"
     build: false
+    pull: "{{ docker_update_containers }}"
   become: false
 
 - name: Copy starlink dashboard config to grafana.

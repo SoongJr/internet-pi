@@ -53,4 +53,5 @@
   community.docker.docker_compose:
     project_src: "{{ config_dir }}/raspberry-monitoring/"
     build: false
+    pull: "{{ docker_update_containers }}"
   become: false
