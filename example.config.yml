@@ -38,6 +38,15 @@ monitoring_ping_hosts:  # [URL];[HUMAN_READABLE_NAME]
   - https://github.com/;github.com
   - https://www.apple.com/;apple.com
 
+# Configure mail account to allow grafana sending notifications/alerts
+monitoring_grafana_email_enable: false
+monitoring_grafana_email_host: smtp.gmail.com:587
+monitoring_grafana_email_user: "<account>@gmail.com"
+monitoring_grafana_email_password: "<password>" # use an "App Password" here if at all possible! For gmail see https://myaccount.google.com/apppasswords
+monitoring_grafana_email_fromaddress: "{{ domain_grafana }}.{{ domain_name }}"
+monitoring_grafana_email_fromname: "Grafana"
+monitoring_grafana_email_recipients: "<account>@gmail.com;<another-email-address@web.de>"
+
 # Shelly Plug configuration. (Also requires `monitoring_enable`)
 shelly_plugs_enable: false
 shelly_plugs:           # list of Shelly Plugs to connect to

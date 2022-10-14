@@ -27,6 +27,13 @@
     state: absent
   become: false
 
+- name: Create alerting folder in grafana/provisioning
+  ansible.builtin.file:
+    path: "{{ config_dir }}/internet-monitoring/grafana/provisioning/alerting"
+    state: directory
+    mode: 0755
+  become: false
+
 - name: Copy templated internet-monitoring files into place.
   ansible.builtin.template:
     src: templates/{{ item.src }}
@@ -37,6 +44,8 @@
       dest: docker-compose.yml
     - src: grafana-config.monitoring.j2
       dest: grafana/config.monitoring
+    - src: alerting.yaml.j2
+      dest: grafana/provisioning/alerting/alerting.yaml
     - src: prometheus.yml.j2
       dest: prometheus/prometheus.yml
     - src: prometheus-pinghosts.yaml.j2
