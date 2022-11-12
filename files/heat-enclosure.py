@@ -52,8 +52,8 @@ def get_setpoint():
 # create PID object
 pid = PID()
 pid.sample_time = 60  # seconds
-pid.Kp = 1  # full blast if we are this many degrees from our target
-pid.Ki = 0.001
+pid.Kp = 2  # full blast if we are half a degree from our target
+pid.Ki = 0.0005 # 0.001 was good when sensor directly next to heater, 0.0005 is better when sensor is buried under some insulation
 # big Kd as it only has effect for a single heating cycle. So if temp changes by .1°C we steer in the other direction for a bit, even if it's the wrong direction.
 # It might make sense to use something different here if we had higher precision temp sensors and/or raised the sample_time significantly, but the latter also reduces reaction time.
 pid.Kd = 150  # 600 equals 100% PWM
