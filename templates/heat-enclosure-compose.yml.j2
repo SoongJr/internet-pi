@@ -15,10 +15,10 @@ services:
         max-file: "3"
     environment:
       TODO: "remove hardcoded values. define TUNINGS together with sensor and plug (system-specific). make definitions in config.yml?"
-      TEMPERATURE_GET: "http://pico-temp-2/dht?room=ants"
-      TEMPERATURE_REBOOT: "http://{{ shelly_plugs_http_username }}:{{ shelly_plugs_http_password }}@shellyplug-fridge/relay/0?turn=off&timer=5"
-      HEATER_POST: "http://{{ shelly_plugs_http_username }}:{{ shelly_plugs_http_password }}@shellyplug-generic-0/relay/0?turn=on&timer={timer}"
-      START_TEMP: 18
-      TARGET_TEMP: 5
-      START_DATE: "2022-10-11"
-      TARGET_DATE: "2022-10-25"
+      TEMPERATURE_GET: "{{ heat_enclosure.temperature_GET }}"
+      TEMPERATURE_REBOOT: "http://{{ shelly_plugs_http_username }}:{{ shelly_plugs_http_password }}@{{ heat_enclosure.reboot_plug }}/relay/0?turn=off&timer=5"
+      HEATER_POST: "http://{{ shelly_plugs_http_username }}:{{ shelly_plugs_http_password }}@{{ heat_enclosure.heater_plug }}/relay/0?turn=on&timer={timer}"
+      START_DATE: "{{ heat_enclosure.start_date }}"
+      START_TEMP: {{ heat_enclosure.start_temp }}
+      TARGET_DATE: "{{ heat_enclosure.target_date }}"
+      TARGET_TEMP: {{ heat_enclosure.target_temp }}
