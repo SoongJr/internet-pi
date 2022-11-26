@@ -102,7 +102,7 @@ while True:
         # (return value is ignored as sample_time has not been exceeded yet,
         # but this lets PID get a better picture of the system)
         pid(temp_actual)
-        print("temp: {}/{}°C".format(temp_actual, pid.setpoint))
+        print("temp: {:.1f}/{:.1f}°C".format(temp_actual, pid.setpoint))
         continue
 
     # we've exceeded pid.sample_time!
@@ -115,13 +115,13 @@ while True:
     heater_pwm = pid(temp_actual)
     p, i, d = pid.components  # individual components that lead to the heater value
     if heater_pwm > 0:
-        print("temp: {}/{}°C\theater: {:.0f}%\t(p: {:.2f}, i: {:.2f}, d: {:.2f})".format(
+        print("temp: {:.1f}/{:.1f}°C\theater: {:.0f}%\t(p: {:.2f}, i: {:.2f}, d: {:.2f})".format(
             temp_actual, pid.setpoint, heater_pwm*100, p, i, d))
 
         # activate heater cable for the calculated duration (must be less than sample_time! But we ensured that in pid.output_limits)
         heater_ontime = ceil(heater_pwm * pid.sample_time)
         requests.post(heater_post.format(timer=heater_ontime))
     else:
-        print("temp: {}/{}°C\theater: off\t(p: {:.2f}, i: {:.2f}, d: {:.2f})".format(
+        print("temp: {:.1f}/{:.1f}°C\theater: off\t(p: {:.2f}, i: {:.2f}, d: {:.2f})".format(
             temp_actual, pid.setpoint, p, i, d))
         # TODO: We could wire up the cooler and actively cool down the enclosure if it's too hot, is that a good idea?

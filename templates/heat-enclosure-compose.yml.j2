@@ -14,7 +14,7 @@ services:
         max-size: "10m"
         max-file: "3"
     environment:
-      TODO: "remove hardcoded values. define TUNINGS together with sensor and plug (system-specific). make definitions in config.yml?"
+      TODO: "define TUNINGS together with sensor and plug (system-specific)"
       TEMPERATURE_GET: "{{ heat_enclosure.temperature_GET }}"
       TEMPERATURE_REBOOT: "http://{{ shelly_plugs_http_username }}:{{ shelly_plugs_http_password }}@{{ heat_enclosure.reboot_plug }}/relay/0?turn=off&timer=5"
       HEATER_POST: "http://{{ shelly_plugs_http_username }}:{{ shelly_plugs_http_password }}@{{ heat_enclosure.heater_plug }}/relay/0?turn=on&timer={timer}"
