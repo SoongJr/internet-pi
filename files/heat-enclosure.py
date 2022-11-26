@@ -6,7 +6,11 @@ import requests
 import time
 import os
 from math import ceil
+import faulthandler
+import signal
 
+faulthandler.enable() # dump a trace when receiving SIGSEGV, SIGFPE, SIGABRT, SIGBUS or SIGILL
+faulthandler.register(signal.SIGUSR1.value) # dump a trace on demand, by someone sending `kill -s SIGUSR1 $(pidof python3)`
 
 # inputs
 if (temp_get := os.environ.get('TEMPERATURE_GET')) is None:
@@ -70,6 +74,9 @@ while True:
     now = time.time()
     if not now - last_measurement >= 5:
         continue
+
+    # on every loop, reset the timer for faulthandler to trace and exit the process. This is a watchdog to ensure the script does not freeze.
+    faulthandler.dump_traceback_later(180, repeat=True, exit=True) # note: I haven't noticed parameter exit actually doing anything...
 
     # measure actual temperature
     last_measurement = now
