@@ -118,7 +118,45 @@
           },
           "unit": "celsius"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "watt"
+              }
+            ]
+          },
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "ants",
+                  "northside"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 10,
@@ -158,6 +196,19 @@
           "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P1809F7CD0C75ACF3"
+          },
+          "editorMode": "builder",
+          "expr": "power{job=\"generic-0\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "heater on",
+          "range": true,
+          "refId": "B"
         }
       ],
       "title": "Temperature",
@@ -870,6 +921,6 @@
   "timezone": "",
   "title": "Temperature categorized",
   "uid": "nZDkJnnVz",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
