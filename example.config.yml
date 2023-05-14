@@ -103,5 +103,6 @@ heat_enclosure:
   target_date: "2026-08-12" # script will linearly decrease temperature until it reaches the target_temp on this date, again at 00:00
   target_temp: 5
   temperature_GET: "http://<host>/[...]" # GET request URL that will return the actual temperature in the enclosure (I'm using a pi pico W with a barebones webserver)
+  #TODO: this needs to get refactored, we need to know the room separately to configure alerts in alerting.yaml
   reboot_plug: "my-other-shelly-plug"    # shelly-plug the temperature sensor is connected to. In case it does not respond, the script will try to reboot it with this.
   heater_plug: "my-shelly-plug"          # shelly-plug the heater is connected to. Obviously this is not going to be the same plug as above.

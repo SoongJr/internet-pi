@@ -16,3 +16,226 @@ contactPoints:
         # <object, required> settings for the specific receiver type
         settings:
           addresses: "{{ monitoring_grafana_email_recipients }}"
+
+# configuring alerts:
+groups:
+    - orgId: 1
+      name: group A
+      folder: alerts
+      interval: 1m # <duration, required> interval that the rule group should evaluated at
+      rules:
+        - uid: NZ--Q2I4k # <string, required> unique identifier for the rule
+          title: Problem with heat enclosure!
+          condition: temp # <string, required> which query should be used for the condition
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 120
+                to: 0
+              datasourceUid: P1809F7CD0C75ACF3 # ID for prometheus (seems to be predictable as the dashboards have the same ID hardcoded)
+              model:
+                editorMode: code
+                expr: temperature_celsius{room="ants"} # TODO: this is hardcoded, can we templetize this? Currently encoded into temperature_GET, we will have to refactor the config.
+                hide: false
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: temp
+              datasourceUid: "-100"
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - -50
+                        type: lt
+                      operator:
+                        type: when
+                      query:
+                        params:
+                            - A
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: "-100"
+                expression: A
+                hide: false
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: temp
+                type: classic_conditions
+          dashboardUid: nZDkJnnVz/temperature-categorized
+          panelId: 12
+          noDataState: OK
+          execErrState: Error
+          for: 2m
+          annotations:
+            __dashboardUid__: nZDkJnnVz/temperature-categorized
+            __panelId__: "12"
+            description: The temperature in the ant enclosure has dropped below minimum threshold.
+            summary: temp below threshold
+          isPaused: false
+        - uid: 3uqIr9tVz
+          title: fridge open
+          condition: temp
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 120
+                to: 0
+              datasourceUid: P1809F7CD0C75ACF3
+              model:
+                editorMode: builder
+                expr: temperature_celsius{room="fridge"}
+                hide: false
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: temp
+              relativeTimeRange:
+                from: 120
+                to: 0
+              datasourceUid: "-100"
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - -50
+                            - 0
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - A
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    name: Expression
+                    type: __expr__
+                    uid: __expr__
+                expression: ""
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: temp
+                type: classic_conditions
+          noDataState: OK
+          execErrState: Error
+          for: 5m
+          annotations:
+            summary: fridge is open or off, or temp probe has failed
+          isPaused: false
+    - orgId: 1
+      name: outage
+      folder: alerts
+      interval: 30s
+      rules:
+        - uid: T-0GsMh4k
+          title: 'Outage: pico-temp-0'
+          condition: A
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 900
+                to: 0
+              datasourceUid: P1809F7CD0C75ACF3
+              model:
+                editorMode: code
+                exemplar: false
+                expr: count(temperature_celsius{host="pico-temp-0"}) == bool 0
+                hide: false
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+          dashboardUid: nZDkJnnVz/temperature-categorized
+          panelId: 12
+          noDataState: Alerting
+          execErrState: Error
+          for: 5m
+          annotations:
+            __dashboardUid__: nZDkJnnVz/temperature-categorized
+            __panelId__: "12"
+            description: A Temperature probe has failed to report measurements for more than a minute. Most likely the Pi Pico has frozen or lost power.
+            summary: Temp probe not responding
+          labels:
+            outage: "true"
+          isPaused: false
+        - uid: sl8owGh4k
+          title: 'Outage: pico-temp-1'
+          condition: A
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 900
+                to: 0
+              datasourceUid: P1809F7CD0C75ACF3
+              model:
+                editorMode: code
+                exemplar: false
+                expr: count(temperature_celsius{host="pico-temp-1"}) == bool 0
+                format: time_series
+                hide: false
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+          dashboardUid: nZDkJnnVz/temperature-categorized
+          panelId: 12
+          noDataState: Alerting
+          execErrState: Error
+          for: 5m
+          annotations:
+            __dashboardUid__: nZDkJnnVz/temperature-categorized
+            __panelId__: "12"
+            description: A Temperature probe has failed to report measurements for more than a minute. Most likely the Pi Pico has frozen or lost power.
+            summary: Temp probe not responding
+          labels:
+            outage: "true"
+          isPaused: false
+        - uid: UVZ-QG2Vz
+          title: 'Outage: pico-temp-2'
+          condition: A
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 900
+                to: 0
+              datasourceUid: P1809F7CD0C75ACF3
+              model:
+                editorMode: code
+                exemplar: false
+                expr: count(temperature_celsius{host="pico-temp-2"}) == bool 0
+                format: time_series
+                hide: false
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+          dashboardUid: nZDkJnnVz/temperature-categorized
+          panelId: 12
+          noDataState: Alerting
+          execErrState: Error
+          for: 5m
+          annotations:
+            __dashboardUid__: nZDkJnnVz/temperature-categorized
+            __panelId__: "12"
+            description: A Temperature probe has failed to report measurements for more than a minute. Most likely the Pi Pico has frozen or lost power.
+            summary: Temp probe not responding
+          labels:
+            outage: "true"
+          isPaused: false
