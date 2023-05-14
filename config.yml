@@ -89,11 +89,11 @@ temp_probes_ext:
 # Created to slowly bring invertebrates to hibernation temperature over the span of two weeks before moving them to the fridge.
 # THIS IS NOT SAFE ENOUGH TO RUN UNSUPERVISED! The script currently freezes occasionally, so be sure to check in daily, maybe set up an alarm in grafana to notify you if temperature fall dangerously low.
 heat_enclosure:
-  enabled: true
+  enabled: false
   start_date: "2022-11-13"  # script will try to keep start_temp before this date (00:00)
   start_temp: 20
   target_date: "2022-11-23" # script will linearly decrease temperature until it reaches the target_temp on this date, again at 00:00
   target_temp: 5
   temperature_GET: "http://pico-temp-2/dht?room=ants" # GET request URL that will return the actual temperature in the enclosure (I'm using a pi pico W with a barebones webserver)
-  reboot_plug: "shellyplug-fridge"                    # shelly-plug the temperature sensor is connected to. In case it does not respond, the script will try to reboot it with this.
+  reboot_plug: "shellyplug-printer"                   # shelly-plug the temperature sensor is connected to. In case it does not respond, the script will try to reboot it with this.
   heater_plug: "shellyplug-generic-0"                 # shelly-plug the heater is connected to. Obviously this is not going to be the same plug as above.
