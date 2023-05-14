@@ -22,3 +22,12 @@ services:
       START_TEMP: {{ heat_enclosure.start_temp }}
       TARGET_DATE: "{{ heat_enclosure.target_date }}"
       TARGET_TEMP: {{ heat_enclosure.target_temp }}
+
+
+#  # this service continuously watches the heat-enclosure container and reboots it if it looks like it's frozen:
+#  # TODO: how to detect that it's "frozen"? What kind of freeze are we running into here? The attempt with etime is not working...
+#  watchdog:
+#    image: docker
+#    volumes: ["/var/run/docker.sock:/var/run/docker.sock"]
+#    command: ["/bin/sh", "-c", "echo \"watchdog started...\"; etime=0; while true; do sleep 60s; new_etime=$$(docker exec heat-enclosure_heat-enclosure_1 sh -c 'ps -T -o etime | head -2 | tail -1'); if [[ $$etime == $$new_etime ]]; then date; echo 'docker restart heat-enclosure_heat-enclosure_1'; else etime=$$new_etime; fi; done"]
+#    restart: unless-stopped

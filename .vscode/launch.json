@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "TEMPERATURE_GET": "http://pico-temp-2/dht?room=ants",
+                "HEATER_POST": "http://soongjr:---@shellyplug-generic-0/relay/0?turn=on&timer={timer}",
+                "START_TEMP": "22",
+                "TARGET_TEMP": "11",
+                "START_DATE": "2022-09-25 21:00",
+                "TARGET_DATE": "2022-09-26 08:00"
+            }
+        }
+    ]
+}
