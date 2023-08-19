@@ -32,6 +32,7 @@ You may find this useful as a starting point for your own setup, but don't expec
 
 **If running locally**: You may encounter an error like "Error while fetching server API version". If you do, please either reboot or log out and log back in, then run the playbook again.
 
+**Chocolatey may issue Checksum errors** especially for Steam, if the setup package on their servers has changed but the choco package has not been updated with the new checksum yet. Check steam.yml for a workaround.
 ## License
 
 MIT

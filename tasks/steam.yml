@@ -1,0 +1,11 @@
+---
+- name: Install Steam
+  chocolatey.chocolatey.win_chocolatey:
+    name: steam-client
+    state: present
+    # # Workaround for "Error - hashes do not match":
+    # # There is only a single setup available from valve, so every time they update their installer
+    # # it takes a while for the choco package to get released with the new checksum.
+    # # As a workaround you can specify it manually here:
+    # checksum: <checksum-from-error-message>
+    # checksum_type: sha256

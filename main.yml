@@ -13,3 +13,7 @@
   tasks:
     - name: Execute basic tasks.
       ansible.builtin.import_tasks: tasks/basic.yml
+
+    - name: Setup Steam.
+      ansible.builtin.import_tasks: tasks/steam.yml
+      when: steam_enable

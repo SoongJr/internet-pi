@@ -5,3 +5,6 @@
 # and instead deliberately do so with a dedicated run without any other change.
 # So this should normally be set to false and only changed for a single run when you're ready to update.
 chocolatey_update_apps: false
+
+# Install Steam:
+steam_enable: false
