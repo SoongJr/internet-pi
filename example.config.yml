@@ -11,6 +11,13 @@ steam_enable: false
 
 # Install nextcloud:
 nextcloud_enable: false
+# nextcloud_url: "<URL>"  # optional, will only install and not configure if this is missing
+# nextcloud_local_path: "<path>"
+# todo: nextcloud_user and nextcloud_password in secrets.yml
 
 # Install keepass:
 keepass_enable: false
+# keepass_database_path: "<path>"  # optional, will only install and not configure if this is missing
+# Note: keepass_database_path has to exist before running the playbook
+# (unless it's on nextcloud and we implement waiting for a sync...)
+# todo: keepass_password in secrets.yml

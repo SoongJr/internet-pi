@@ -3,3 +3,25 @@
   chocolatey.chocolatey.win_chocolatey:
     name: nextcloud-client
     state: present
+
+# TODO: set up the connection with ansible.
+#       nextcloudcmd should be able to achieve this, but Nextcloud install folder is not added to PATH,
+#       so we first have to find the exectuable.
+# - name: Check that nextcloudcmd is installed
+#   ansible.windows.win_command:
+#     cmd: where nextcloudcmd
+#   changed_when: false
+#   check_mode: false
+#
+# - name: Set up connection
+#   ansible.windows.win_command:
+#     argv:
+#     - nextcloudcmd
+#     - --user {{ nextcloud_user }}
+#     - --non-interactive
+#     - "{{ nextcloud_local_path }}"
+#     - "{{ nextcloud_url }}"
+#   stdin: "{{ nextcloud_password }}"
+#   changed_when: false
+#   check_mode: false
+#   when: nextcloud_url is defined
