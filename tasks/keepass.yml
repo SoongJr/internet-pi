@@ -3,23 +3,3 @@
   chocolatey.chocolatey.win_chocolatey:
     name: keepass
     state: present
-
-# TODO: load the database file into keepass
-#       we can probably do so by just starting keepas.exe, but the install folder is not added to PATH,
-#       so we first have to find the exectuable.
-# - name: Check that keepass command is installed
-#   ansible.windows.win_command:
-#     cmd: where keepass
-#   changed_when: false
-#   check_mode: false
-#
-# - name: Start keepass
-#   # this mainly ensures that the database is preselected when the user starts the app themselves.
-#   ansible.windows.win_command:
-#     argv:
-#     - keepass
-#     - -pw-stdin
-#     - "{{ keepass_database_path }}"
-#   stdin: "{{ keepass_password }}"
-#   changed_when: false
-#   when: keepass_database_path is defined
