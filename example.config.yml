@@ -8,3 +8,9 @@ chocolatey_update_apps: false
 
 # Install Steam:
 steam_enable: false
+
+# Install nextcloud:
+nextcloud_enable: false
+
+# Install keepass:
+keepass_enable: false

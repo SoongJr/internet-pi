@@ -17,3 +17,11 @@
     - name: Setup Steam.
       ansible.builtin.import_tasks: tasks/steam.yml
       when: steam_enable
+
+    - name: Setup Nextcloud.
+      ansible.builtin.import_tasks: tasks/nextcloud.yml
+      when: nextcloud_enable
+
+    - name: Setup KeePass.
+      ansible.builtin.import_tasks: tasks/keepass.yml
+      when: keepass_enable

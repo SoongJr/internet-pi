@@ -1,0 +1,5 @@
+---
+- name: Install keepass
+  chocolatey.chocolatey.win_chocolatey:
+    name: keepass
+    state: present

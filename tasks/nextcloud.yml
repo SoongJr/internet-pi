@@ -1,0 +1,5 @@
+---
+- name: Install Nextcloud Client
+  chocolatey.chocolatey.win_chocolatey:
+    name: nextcloud-client
+    state: present

@@ -1,3 +1,4 @@
 ---
 collections:
+  - ansible.windows
   - chocolatey.chocolatey
