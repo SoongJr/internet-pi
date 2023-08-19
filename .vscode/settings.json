@@ -1,0 +1,3 @@
+{
+    "ansible.python.interpreterPath": "/var/git/internet-pi/.venv/bin/python3"
+}

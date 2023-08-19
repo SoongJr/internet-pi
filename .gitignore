@@ -1,2 +1,4 @@
+.venv
 inventory.ini
+connection-password.txt
 config.yml
