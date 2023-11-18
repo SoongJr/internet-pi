@@ -1,0 +1,10 @@
+---
+- name: Install Windows Terminal
+  chocolatey.chocolatey.win_chocolatey:
+    name: microsoft-windows-terminal
+    state: present
+
+- name: Configure Windows Terminal (copy settings fragments)
+  ansible.windows.win_copy:
+    src: files/windows-terminal/user-profiles
+    dest: '%ProgramData%\Microsoft\Windows Terminal\Fragments\'

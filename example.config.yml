@@ -17,3 +17,6 @@ keepass_enable: false
 
 # Install VS Code:
 vscode_enable: true
+
+# Install Windows Terminal:
+terminal_enable: true

@@ -29,3 +29,7 @@
     - name: Setup Visual Studio Code.
       ansible.builtin.import_tasks: tasks/vscode.yml
       when: vscode_enable
+
+    - name: Setup Windows Terminal.
+      ansible.builtin.import_tasks: tasks/terminal.yml
+      when: terminal_enable
