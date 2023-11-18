@@ -1,0 +1,25 @@
+{
+    "profiles": [
+        {
+            "name": "nextcloud-pi",
+            "commandline": "powershell.exe -c \"while ($true) { wsl -d Debian ssh pi@nextcloud-pi; Start-Sleep -Seconds 0.5 }\"",
+            "guid": "{139ccae8-b8a8-4b94-8cea-b2110f1bed92}",
+            "icon": "%LocalAppData%/Microsoft/Windows Terminal/Fragments/user-profiles/nextcloud_logo_icon_168948.png",
+            "tabTitle": "SSH"
+        },
+        {
+            "name": "internet-pi",
+            "commandline": "powershell.exe -c \"while ($true) { wsl -d Debian ssh pi@internet-pi; Start-Sleep -Seconds 1 }\"",
+            "guid": "{bb1592f3-7576-41cd-b136-415a0a4f14ef}",
+            "icon": "%LocalAppData%/Microsoft/Windows Terminal/Fragments/user-profiles/grafana_icon-512.png",
+            "tabTitle": "SSH"
+        },
+        {
+            "name": "octoprint",
+            "commandline": "powershell.exe -c \"while ($true) { wsl -d Debian ssh -p 69 soongjr@octoprint; Start-Sleep -Seconds 0.5 }\"",
+            "guid": "{a73f4f5d-b60f-4a10-b761-87b0a1b6ac69}",
+            "icon": "%LocalAppData%/Microsoft/Windows Terminal/Fragments/user-profiles/octoprint_icon.png",
+            "tabTitle": "SSH"
+        }
+    ]
+}
