@@ -17,6 +17,8 @@ You may find this useful as a starting point for your own setup, but don't expec
      - `example.inventory.ini` to `inventory.ini` (replace IP address with your client's IP, or comment that line and uncomment the `connection=local` line if you're running it on the machine you're setting up).
      - `example.config.yml` to `config.yml`
   5. Create a file named `connection-password.txt` containing the windows password of the target.
+  6. Create a file named `secrets.yml` containing secrets you do not wish to set in config.yml  
+    (as that risks accidentally uploading them to github)
 
 ### prepare target client
   1. Set up a local user (as opposed to logging in with windows account) to be able to authenticate via NTLM.

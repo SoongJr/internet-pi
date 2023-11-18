@@ -9,7 +9,11 @@
       loop:
         - example.config.yml
         - config.yml
-
+    - name: Load secrets.
+      ansible.builtin.include_vars: "{{ item }}"
+      when: item is file
+      loop:
+        - secrets.yml
   tasks:
     - name: Execute basic tasks.
       ansible.builtin.import_tasks: tasks/basic.yml
