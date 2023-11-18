@@ -1,4 +1,4 @@
 ansible ~= 8.6.1
-pywinrm>=0.3.0
+pywinrm == 0.4.3
 yamllint
 ansible-lint
