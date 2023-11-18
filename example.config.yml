@@ -14,3 +14,6 @@ nextcloud_enable: false
 
 # Install keepass:
 keepass_enable: false
+
+# Install VS Code:
+vscode_enable: true

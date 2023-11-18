@@ -1,0 +1,5 @@
+---
+- name: Install VS Code
+  chocolatey.chocolatey.win_chocolatey:
+    name: vscode
+    state: present

@@ -25,3 +25,7 @@
     - name: Setup KeePass.
       ansible.builtin.import_tasks: tasks/keepass.yml
       when: keepass_enable
+
+    - name: Setup Visual Studio Code.
+      ansible.builtin.import_tasks: tasks/vscode.yml
+      when: vscode_enable
