@@ -18,15 +18,15 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
 
-      - name: Set up Python 3.
+      - name: Set up Python 3
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.11'
 
-      - name: Install test dependencies.
-        run: pip3 install yamllint ansible-base ansible-lint
+      - name: Install test dependencies
+        run: pip3 install yamllint ansible-base ansible-lint six
 
       - name: Lint yaml
         run: yamllint .
       - name: Lint ansible
-        run: ansible-lint --nocolor
+        run: ansible-lint
