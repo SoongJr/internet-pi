@@ -33,3 +33,7 @@
     - name: Setup Windows Terminal.
       ansible.builtin.import_tasks: tasks/terminal.yml
       when: terminal_enable
+
+    - name: Setup Docker Desktop.
+      ansible.builtin.import_tasks: tasks/docker-desktop.yml
+      when: docker_desktop_enable

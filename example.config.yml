@@ -20,3 +20,6 @@ vscode_enable: true
 
 # Install Windows Terminal:
 terminal_enable: true
+
+# Install Docker Desktop:
+docker_desktop_enable: true
