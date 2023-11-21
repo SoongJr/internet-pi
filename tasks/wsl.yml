@@ -1,34 +1,17 @@
 ---
-- name: Ensure WSL feature is enabled
+- name: Ensure features required for WSL are enabled
   # required before we can call wsl.exe! Even wsl --list only prints the help page if feature is disabled.
-  ansible.windows.win_powershell:
-    script: |
-      # Ansible defaults/initialisation:
-      $Ansible.Changed = $false
-      $Ansible.Result['reboot_required'] = $false
+  ansible.windows.win_optional_feature:
+    name:
+      - Microsoft-Windows-Subsystem-Linux
+      - VirtualMachinePlatform
+      - Microsoft-Hyper-V-All
+    state: present
+  register: optional_features
 
-      # Ensure both WSL itself and Virtual Machien Platform (for WSL2) are enabled
-      foreach ($FeatureName in (
-        "Microsoft-Windows-Subsystem-Linux",
-        "VirtualMachinePlatform",
-        "Microsoft-Hyper-V-All"
-      ))
-      {
-        # Check current feature setting:
-        $FeatureState = (Get-WindowsOptionalFeature -ErrorAction Stop -Online -FeatureName $FeatureName).State
-        if ($FeatureState -ne "Enabled" -and ! $Ansible.CheckMode) {
-          # If feature is currently disabled, enable it now (with restart handled by Ansible later):
-          dism.exe /online /enable-feature /featurename:$FeatureName /all /norestart
-          # Enable-WindowsOptionalFeature -ErrorAction Stop -Online -FeatureName $FeatureName -NoRestart
-          $Ansible.Result['reboot_required'] = $true
-        }
-      }
-  register: enable_feature
-- name: Reboot for Windows Feature change to take effect
+- name: Reboot if features had to be activated
   ansible.windows.win_reboot:
-  #   reboot_timeout: 3600  # machine might be exceptionally slow
-  #   post_reboot_delay: 120  # waiting a bit after reboot to improve reliability
-  when: enable_feature.result.reboot_required
+  when: optional_features.reboot_required
 
 - name: Check if desired distribution is already installed
   # also gives us the current (default) user so we can determine if we need to set up a user
