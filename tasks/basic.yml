@@ -1,4 +1,9 @@
 ---
+- name: Create restore point (only works once a day)
+  ansible.windows.win_powershell:
+    script: Checkpoint-Computer -Description "ansible provisioning" -RestorePointType APPLICATION_INSTALL
+  changed_when: false  # having another restore point doesn't really change the system
+
 - name: Ensure WinRM starts when the system has settled and is ready to work reliably
   # this is important for rebooting during ansible run
   ansible.windows.win_service:
@@ -19,3 +24,7 @@
     name: all
     state: latest
   when: chocolatey_update_apps
+
+# TODO: create SSH key (and potentially register it on GitHub?
+# Might be no easy task, there is a gh cli endpoint for that but that requires logging in with gh cli.
+# Maybe we can use the host's ssh key, but that needs to be exposed to the ansible container first.)
