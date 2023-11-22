@@ -2,7 +2,7 @@
 - name: Windows Client config
   hosts: windows_client
   gather_timeout: 600  # longer timeout accounting for delayed startup of WinRM service
-  # become: true
+  become_method: ansible.builtin.runas
 
   pre_tasks:
     - name: Load configuration (with defaults from example file).
