@@ -27,7 +27,11 @@ You may find this useful as a starting point for your own setup, but don't expec
 ### prepare target client
   1. Set up a local user (as opposed to logging in with windows account) to be able to authenticate via NTLM.
   2. Ensure [prerequisistes are fullfilled](https://docs.ansible.com/ansible/latest//os_guide/windows_setup.html#windows-setup).  
-    In elevated powershell: `winrm quickconfig` and `winrm set winrm/config/client '@{TrustedHosts="<ansible-host>"}'`
+    In elevated powershell: `winrm quickconfig`, granting admin access,  
+    then and `winrm set winrm/config/client '@{TrustedHosts="<ansible-host-ip>"}'`
+
+### check the playbook
+`ansible-lint . && yamllint -f parsable .`
 
 ### run the playbook
 `ansible-playbook --connection-password-file=connection-password.txt main.yml`
