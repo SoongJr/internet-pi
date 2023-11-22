@@ -4,8 +4,9 @@
   ansible.windows.win_optional_feature:
     name:
       - Microsoft-Windows-Subsystem-Linux
-      - VirtualMachinePlatform
-      - Microsoft-Hyper-V-All
+      # WSL2 keeps claiming you need to activate VirtualMachinePlatform, but as of yet everything works fine.
+      # Activating it breaks the Windows installation, requiring reset to restore point, so not doing that right now.
+      # - VirtualMachinePlatform
     state: present
   register: optional_features
 
@@ -13,72 +14,172 @@
   ansible.windows.win_reboot:
   when: optional_features.reboot_required
 
+# # this somehow manages to raise a UAC dialog on the target machine if user is logged on (simply fails otherwise)
+# # using "become: true" did not help this at all.
+# - name: Check for WSL kernel update
+#   ansible.windows.win_powershell:
+#     script: |
+#       # Ansible defaults/initialisation:
+#       $Ansible.Changed = $false
+#       if ($Ansible.CheckMode) {
+#         Write-Output "Nothing to do in check-mode"
+#         exit 0
+#       }
+#       [System.Console]::OutputEncoding = [System.Text.Encoding]::Unicode # force WSL to use a sane encoding for output
+#       $WslOutput = wsl.exe --update
+#       if (! $?) {
+#         Write-Output $WslOutput
+#         Write-Error -ErrorAction Stop "Failed updating WSL kernel"
+#       }
+#       # parse WSL output to determine if there was an update
+#       $Ansible.Changed = ! $WslOutput.Contains(
+#         "The most recent version of Windows Subsystem for Linux is already installed."
+#       )
+#   become: true
+#   become_user: "{{ ansible_user }}"
+
 - name: Check if desired distribution is already installed
   # also gives us the current (default) user so we can determine if we need to set up a user
   ansible.windows.win_powershell:
     script: |
       # Ansible defaults/initialisation:
       $Ansible.Changed = $false
-      $Ansible.Result['exists'] = $false
-      $env:WSL_UTF8 = 1 # force WSL to use a sane encoding for output
-      # ask WSL for name of default user of desired distro:
-      $WslOutput = wsl.exe --distribution "{{ wsl_distribution }}" -- whoami
-      if ($?) {
-        $Ansible.Result['exists'] = $true
-        $Ansible.Result['default_user'] = $WslOutput
+      $OriginalEncoding = [System.Console]::OutputEncoding
+      [System.Console]::OutputEncoding = [System.Text.Encoding]::Unicode # force WSL to use a sane encoding for output
+      # start WSL and evaluate whether it failed:
+      $WslOutput = wsl.exe --distribution "{{ wsl_distribution }}"
+      $Ansible.Result['exists'] = $?
+      if ($Ansible.Result['exists']) {
+        # ask WSL for name of default user of desired distro (this has be done with default Encoding):
+        [System.Console]::OutputEncoding = $OriginalEncoding
+        $Ansible.Result['default_user'] = wsl.exe --distribution "{{ wsl_distribution }}" -- whoami
+        $null = wsl.exe --distribution "{{ wsl_distribution }}" --user "{{ wsl_user }}" -- exit 0
+        $Ansible.Result['user_exists'] = $?
+      } else {
+        $Ansible.Result['error'] = $WslOutput
       }
   register: existing_dist
-
-- name: WSL already set up, print current default user
+- name: DBG - print existing_dist
   ansible.builtin.debug:
-    msg: "{{ existing_dist.default_user }}"
+    msg: "{{ existing_dist }}"
+
+- name: WSL already set up, print user information
+  ansible.builtin.debug:
+    msg:
+      - "{{ 'user ' + wsl_user + ' exists' if existing_dist.result.user_exists else 'user ' + wsl_user + ' missing' }}"
+      - "default user is {{ existing_dist.result.default_user }}"
   when: existing_dist.result.exists
+
+# appears to require VirtualMachinePlatform, but default version is actually already set to 2
+# - name: Ensure WSL version is set to 2
+#   ansible.windows.win_powershell:
+#     script: |
+#       if ($Ansible.CheckMode) {
+#         Write-Output "Nothing to do in check-mode"
+#         exit 0
+#       }
+#       [System.Console]::OutputEncoding = [System.Text.Encoding]::Unicode # force WSL to use a sane encoding for output
+#       $Env:WSL_UTF8 = 1
+#       wsl.exe --set-default-version 2 # ensure we are using WSL2
+#       if (! $?) {
+#         Write-Error -ErrorAction Stop "Failed setting version to WSL2"
+#       }
+#       # TODO: could probably parse the version from wsl --status and check if it changed...
 
 - name: Install desired distribution
   ansible.windows.win_powershell:
     script: |
       if ($Ansible.CheckMode) {
-        Write-Host "Nothing to do in check-mode"
+        Write-Output "Nothing to do in check-mode"
         exit 0
       }
-      # force WSL to use a sane encoding for output
-      $env:WSL_UTF8 = 1
-      wsl.exe --set-default-version 2 # ensure we are using WSL2
+      [System.Console]::OutputEncoding = [System.Text.Encoding]::Unicode # force WSL to use a sane encoding for output
+      # install distro (without stdin this simply creates no user)
+      wsl.exe --install --distribution {{ wsl_distribution }}
+      wsl.exe --distribution "{{ wsl_distribution }}"
+      # --install claims that "Debian GNU/Linux is already installed" even when it's not, but
+      # running wsl later claims "There is no distribution with the supplied name"
+      # because --install didn't do anything...
+      # if (! $?) {
+      #   Write-Error -ErrorAction Stop "Failed installing {{ wsl_distribution }}"
+      # }
+      # Start-Sleep -Seconds 120
+      # ask WSL for name of default user of desired distro:
+      $WslOutput += wsl.exe --distribution "{{ wsl_distribution }}" -- whoami
       if (! $?) {
-        Write-Error -ErrorAction Stop "Failed setting version to WSL2"
-      }
-      wsl.exe --install --distribution "{{ wsl_distribution }}"
-      if (! $?) {
+        Write-Error ($WslOutput -join "`n")
         Write-Error -ErrorAction Stop "Failed installing {{ wsl_distribution }}"
       }
-      if ("{{ wsl_distribution_makedefault }}" -eq "True") {
-        wsl.exe --set-default "{{ wsl_distribution }}"
-        if (! $?) {
-          Write-Error -ErrorAction Stop "Failed setting {{ wsl_distribution }} as default"
-        }
-      }
-    # # after install, this asks for input to set up a user, so provide that as stdin
-    # stdin: |
-    #   {{ wsl_user }}
-    #   {{ wsl_password }}
   when: not existing_dist.result.exists
   # Note: This places the whole image - which can get VERY large - into user folder.
 
-  # TODO: basic setup for the image (username/password, SSH forwarding so it can be provisioned with ansible)
+- name: Set desired distribution as default
+  ansible.windows.win_powershell:
+    script: |
+      if ($Ansible.CheckMode) {
+        Write-Output "Nothing to do in check-mode"
+        exit 0
+      }
+      [System.Console]::OutputEncoding = [System.Text.Encoding]::Unicode # force WSL to use a sane encoding for output
+      wsl.exe --set-default "{{ wsl_distribution }}"
+      if (! $?) {
+        Write-Error -ErrorAction Stop "Failed setting {{ wsl_distribution }} as default"
+      }
+      # TODO. check current default first to determine if changes were made
+  when: wsl_distribution_makedefault
+
+  # basic setup for the image (username/password, SSH forwarding so it can be provisioned with ansible)
   # following best practices: https://learn.microsoft.com/en-us/windows/wsl/setup/environment
-  # possibly we could export a prepared image and upload it to github, but it's probably too big...
 - name: Create non-root user
-  ansible.windows.win_command:
-    argv:
-      - set "WSL_UTF8=1" & wsl.exe
-      - --distribution "{{ wsl_distribution }}"
-      - --
-      - useradd
-      - --create-home
-      - --shell /usr/bin/bash
-      - --user-group
-      - --groups sudo
-      - --password "{{ wsl_password }}"
-      - "{{ wsl_user }}"
+  ansible.windows.win_powershell:
+    script: |
+      if ($Ansible.CheckMode) {
+        Write-Output "Nothing to do in check-mode"
+        exit 0
+      }
+      # OutputEncoding does not need to be adjusted here because bash returns proper encoding,
+      # only outputs from wsl.exe itself cause issues.
+      wsl.exe --distribution "{{ wsl_distribution }}" -- `
+        useradd --create-home --shell /usr/bin/bash --user-group --groups sudo `
+          --password "{{ wsl_password }}" "{{ wsl_user }}"
+      if (! $?) {
+        Write-Error -ErrorAction Stop "Failed creating user"
+      }
+  # only do if not already installed or user not already exists
+  when: (not existing_dist.result.exists) or (not existing_dist.result.user_exists)
+
+- name: Make created user the default
+  ansible.windows.win_powershell:
+    script: |
+      if ($Ansible.CheckMode) {
+        Write-Output "Nothing to do in check-mode"
+        exit 0
+      }
+      # OutputEncoding does not need to be adjusted here because bash returns proper encoding,
+      # only outputs from wsl.exe itself cause issues.
+
+      # first install crudini to be able to easily manipulate ini files
+      wsl.exe --distribution "{{ wsl_distribution }}" -u root -- bash -c "
+        which crudini >/dev/null || (
+          export DEBIAN_FRONTEND=noninteractive; apt-get update && apt-get install -y crudini
+        )
+      "
+      if (! $?) {
+        Write-Error -ErrorAction Stop "Failed installing crudini"
+      }
+      wsl.exe --distribution "{{ wsl_distribution }}" -u root -- bash -c "
+        crudini --inplace --set '/etc/wsl.conf' 'user' 'default' '{{ wsl_user }}'
+      "
+      if (! $?) {
+        Write-Error -ErrorAction Stop "Failed setting user {{ wsl_user }} as default"
+      }
+      # Check whether this had any effect, need to shutdown WSL first for that.
+      wsl.exe --terminate --distribution "{{ wsl_distribution }}"
+      # Start-Sleep -Seconds 8
+      $ActualDefaultUser = wsl.exe --distribution "{{ wsl_distribution }}" -- whoami
+      if ( $ActualDefaultUser -ne "{{ wsl_user }}" ) {
+        Write-Error -ErrorAction Stop -Message `
+          "Setting user {{ wsl_user }} as default had no effect, ran as $ActualDefaultUser instead."
+      }
   # only do if not already installed or user not already the default (not checking full list of existing users...)
   when: (not existing_dist.result.exists) or (existing_dist.result.default_user != wsl_user)
