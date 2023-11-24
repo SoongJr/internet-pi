@@ -46,3 +46,20 @@
     - name: Setup Docker Desktop.
       ansible.builtin.import_tasks: tasks/docker-desktop.yml
       when: docker_desktop_enable
+
+# TODOs:
+# Firefox/Chrome and restore bookmarks from json file
+# Adobe Acrobat PDF reader
+# Office
+# Solid Edge
+# WISO Mein Geld + Datenwiederherstellung
+# Beyond Compare 4
+# CrystalDiskInfo and CrystalDiskMark
+# DBBrowser
+# Greenshot
+# ImageMagick
+# Inkscape
+# MPC-HC
+# OpenSCAD
+# Ultimaker Cura
+# after everything is done, disable WinRM (and/or remove this machine as a trusted host)
