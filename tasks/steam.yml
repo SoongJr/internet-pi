@@ -7,5 +7,5 @@
     # # There is only a single setup available from valve, so every time they update their installer
     # # it takes a while for the choco package to get released with the new checksum.
     # # As a workaround you can specify it manually here:
-    # checksum: <checksum-from-error-message>
-    # checksum_type: sha256
+    checksum: 3B616CB0BEAACFFB53884B5BA0453312D2577DB598D2A877A3B251125FB281A1
+    checksum_type: sha256
