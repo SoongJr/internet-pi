@@ -62,5 +62,8 @@
 # MPC-HC
 # OpenSCAD
 # Ultimaker Cura
-# USBIPD-WIN project (no choco, use `winget install --interactive --exact dorssel.usbipd-win`, "--interactive" prevents restart)
+# USBIPD-WIN project (no choco, use `winget install --interactive --exact dorssel.usbipd-win --accept-source-agreements --accept-package-agreements`)
+#    Note that using winget is not supported vias WinRM or ssh... https://github.com/microsoft/winget-cli/issues/256
+#    And "--interactive" is needed to prevent restart, but then opens a GUI wizards (ansible has a "may-restart" property I think...)
+#    And there's no chosolatey package for 
 # after everything is done, disable WinRM (and/or remove this machine as a trusted host)
