@@ -19,7 +19,7 @@ keepass_enable: false
 vscode_enable: true
 
 # Set up WSL (Windows Terminal and Docker Desktop both benefits from this):
-wsl_enable: true
+wsl_enable: false
 wsl_distribution: Debian  # distribution to use/install, only Debian is tested!
 wsl_distribution_makedefault: false  # make this distribution the default
 wsl_user: soongjr
