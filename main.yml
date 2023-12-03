@@ -59,7 +59,7 @@
 # Greenshot
 # ImageMagick
 # Inkscape
-# MPC-HC
+# MPC-HC: `choco install -e "mpc-hc-clsid2"`
 # OpenSCAD
 # Ultimaker Cura
 # USBIPD-WIN project (no choco, use `winget install --interactive --exact dorssel.usbipd-win --accept-source-agreements --accept-package-agreements`)
