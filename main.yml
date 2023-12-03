@@ -48,7 +48,8 @@
       when: docker_desktop_enable
 
 # TODOs:
-# Firefox/Chrome (`choco install -e "Firefox"`/`"GoogleChrome"`) and restore bookmarks from json file
+# remove keepass setup from ansible, start `"<nextcloud_root>\Programs\Keepass\KeePass.exe"` instead (if exists, requires re-run of playbook after user has logged into nextcloud and finished sync...)
+# Firefox/Chrome (`choco install -e "Firefox"`/`"GoogleChrome"`) and restore bookmarks from json file, install extensions, disable password manager...
 # Adobe Acrobat PDF reader
 # Office
 # Solid Edge
