@@ -10,12 +10,12 @@ You may find this useful as a starting point for your own setup, but don't expec
 ### prepare ansible host
   1. Clone this repository, then enter the repository directory: `cd internet-pi`.
   2. Procure some existing system with Python3 installed, ideally a linux machine. Consider using docker:
-    `docker run --network=host --volume="$(pwd):$(pwd):ro" --workdir="$(pwd)" --interactive --tty --detach --name ansi --pull=always python:3.11-slim`  
+    `docker run --network=host --volume="$(pwd):/src:ro" --workdir="/src" --interactive --tty --detach --name ansi --pull=always python:3.11-slim`  
     (Note: pywinrm does not officially support latest python, hence using an older one here.)
   3. [Install Ansible on said machine](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).  
   One way is using pip: `python3 -m venv .venv && . .venv/bin/activate && python3 -m pip install -r requirements.txt`  
-  When using docker, prefix any commands with `docker start ansi; docker exec -it -w "$(pwd)" ansi ` and don't use virtual env:  
-  `docker start ansi; docker exec -it -w "$(pwd)" ansi python3 -m pip install -r requirements.txt`
+  When using docker, prefix any commands with `docker start ansi; docker exec -it ansi ` and don't use virtual env:  
+  `docker start ansi; docker exec -it ansi python3 -m pip install -r requirements.txt`
   4. Install requirements: `ansible-galaxy collection install -r requirements.yml` (if you see `ansible-galaxy: command not found`, restart your SSH session or reboot the machine and try again)
   5. Make copies of the following files and customize them to your liking:
      - `example.inventory.ini` to `inventory.ini` (replace IP address with your client's IP, or comment that line and uncomment the `connection=local` line if you're running it on the machine you're setting up).
