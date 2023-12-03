@@ -48,7 +48,7 @@
       when: docker_desktop_enable
 
 # TODOs:
-# Firefox/Chrome and restore bookmarks from json file
+# Firefox/Chrome (`choco install -e "Firefox"`/`"GoogleChrome"`) and restore bookmarks from json file
 # Adobe Acrobat PDF reader
 # Office
 # Solid Edge
