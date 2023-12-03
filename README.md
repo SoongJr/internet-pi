@@ -29,7 +29,7 @@ You may find this useful as a starting point for your own setup, but don't expec
    1. Make sure your network profile is "private" ("Network Status" -> "Properties")
    1. In elevated powershell: `winrm quickconfig`, granting admin access,  
    1. Then add your ansible host as trusted with `winrm set winrm/config/client '@{TrustedHosts="<ansible-host-ip>"}'`
-1. Add a local user (as opposed to logging in with windows account) to be able to authenticate via NTLM. It needs to be an Administrator. You never need to log in as that user.
+1. Add a local user (as opposed to logging in with windows account) to be able to authenticate via NTLM. Don't forget to change the Role to Administrator. You never need to log in as that user.
 
 ### check the playbook
 `ansible-lint . && yamllint -f parsable .`
@@ -38,7 +38,10 @@ You may find this useful as a starting point for your own setup, but don't expec
 `ansible-playbook --connection-password-file=connection-password.txt main.yml`
 
 ### make your target more secure
-1. disable WinRM
+1. disable WinRM:
+   1.  `Get-NetFirewallRule | ? {$_.Displayname -eq "Windows Remote Management (HTTP-In)"} | Set-NetFirewallRule -Enabled "False"`
+   2.  `Stop-Service winrm; Set-Service -Name winrm -StartupType Disabled`
+   3.  `Get-NetFirewallRule | ? {$_.Displayname -eq "Windows Remote Management (HTTP-In)"} | Set-NetFirewallRule -Enabled "False"`
 1. remove the local user you created
 
 ### Known Issues
