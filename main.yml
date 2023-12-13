@@ -50,6 +50,7 @@
 # TODOs:
 # remove keepass setup from ansible, start `"<nextcloud_root>\Programs\Keepass\KeePass.exe"` instead (if exists, requires re-run of playbook after user has logged into nextcloud and finished sync...)
 # Firefox/Chrome (`choco install -e "Firefox"`/`"GoogleChrome"`) and restore bookmarks from json file, install extensions, disable password manager...
+# For Windows "N" editions: enable Windows MediaFeaturePack: https://support.microsoft.com/en-us/topic/media-feature-pack-list-for-windows-n-editions-c1c6fffa-d052-8338-7a79-a4bb980a700a
 # Adobe Acrobat PDF reader
 # Office
 # Solid Edge
