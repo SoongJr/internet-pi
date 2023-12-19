@@ -68,4 +68,6 @@
 #    Note that using winget is not supported vias WinRM or ssh... https://github.com/microsoft/winget-cli/issues/256
 #    And "--interactive" is needed to prevent restart, but then opens a GUI wizards (ansible has a "may-restart" property I think...)
 #    And there's no chosolatey package for 
+# apply registry patches:
+#  - context menu entries for "add to MPC-HC playlist" and "recode video"
 # after everything is done, disable WinRM (and/or remove this machine as a trusted host)
