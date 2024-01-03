@@ -57,7 +57,7 @@
 # WISO Mein Geld + Datenwiederherstellung
 # Beyond Compare 4
 # CrystalDiskInfo and CrystalDiskMark
-# DBBrowser
+# DBBrowser: `choco install -e "sqlitebrowser"`
 # Greenshot
 # ImageMagick
 # Inkscape
